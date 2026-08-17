@@ -4,7 +4,7 @@ This library provides functions for reading and writing images in several format
 
 This is done through FFI bindings to libgdk-pixbuf, and while some raw bindings are available, it is intended that most users can use the following functions
 
-The path to `libgdk_pixbuf` is hard-coded in `pixbuf.bqn` so you will most likely need to modify those values to get it working.
+This library uses newer syntax and feature of CBQN 0.12, so make sure you're up to date!
 
 ```bqn
 ⟨ReadImg,WriteImg,ToRGB,ToRGBA⟩ ← •Import "pixbuf.bqn"
