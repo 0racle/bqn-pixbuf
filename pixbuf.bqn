@@ -27,10 +27,12 @@ ReadImg ← {
   z
 }
 
+ToLower ← +⟜(32×1="A["⊸⍋)
+
 types ← ⟨"png"‿@⟩‿⟨"bmp"‿@⟩‿⟨"jpg"‿"jpeg"⟩‿⟨"tif"‿"tiff"⟩
 
 WriteImg ← {img𝕊fname:
-  ext ← (+`'.'=»)⊸/fname
+  ext ← ToLower(+`'.'=»)⊸/fname
   "Unknown type" ! ≠ type ← /∾´⟨ext⟩ ⊑∘∊⚇2 types
   h‿w ← 2↑≢img ⋄ fmt ← ⊑>types⊑˜type
   data ← ⥊ (2=≠∘≢)◶((∾⟜255˘˘)⍟(4>⊢´∘≢))‿ToRGBA img

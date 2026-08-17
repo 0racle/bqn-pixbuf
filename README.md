@@ -60,7 +60,7 @@ Returns: m×n×4 array representing RGBA values
 
 # See also
 
-This module plays nicely with [bqn-viewmat](https://github.com/0racle/bqn-viewmat) for viewing images
+This library plays nicely with [bqn-viewmat](https://github.com/0racle/bqn-viewmat) for viewing images
 
 ```bqn
 ⟨Viewmat⟩ ← •Import "viewmat.bqn"
@@ -69,4 +69,4 @@ This module plays nicely with [bqn-viewmat](https://github.com/0racle/bqn-viewma
 
 # Advanced
 
-If you want access to the underlying raw bindings, this module also exports the namespace `gtkPixbuf` which contains the few functions this library uses, as well as the `•FFI` bound lib so that you can write your own bindings.
+If you want access to the underlying raw bindings, this library also exports the namespace `gtkPixbuf` which contains the few functions this library uses, as well as the `•FFI` bound lib so that you can write your own bindings.
