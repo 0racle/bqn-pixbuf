@@ -1,7 +1,7 @@
 #!/usr/bin/env bqn
 
 gdkPixbuf ← {
-  Lib ⇐ "/usr/lib/x86_64-linux-gnu/libgdk_pixbuf-2.0.so"⊸•FFI
+  Lib ⇐ ↑‿"libgdk_pixbuf-2.0.so"⊸•FFI
   unref        ⇐ Lib    ""‿"gdk_pixbuf_unref"        ‿"*"
   newFrom_file ⇐ Lib   "*"‿"gdk_pixbuf_new_from_file"‿"*u8:c8"‿"&*u8"
   getWidth     ⇐ Lib "u32"‿"gdk_pixbuf_get_width"    ‿"*"
