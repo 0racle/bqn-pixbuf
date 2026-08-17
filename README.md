@@ -25,16 +25,16 @@ Returns: m×n (2D) matrix of 32-bit integers, each encoding RGBA values
 img WriteImg "image.png"
 ```
 
-Right arg: string of the file path to be written
-Left arg: array representation of a image*
-Returns: 1 on success, throws on failure
+Right arg: string of the file path to be written  
+Left arg: array representation of a image*  
+Returns: 1 on success, throws on failure  
 
 The left argument may be in the following formats
   * m×n (2D) matrix of 32-bit integers
   * m×n×3 array representing RGB values
   * m×n×4 array representing RGBA values
 
-**Note:** The format will be auto-detected from the extension.
+**Note:** The format will be auto-detected from the extension.  
 Formats tested as working are "png", "jpg" (or "jpeg"), "bmp", "tif" (or "tiff")
 
 ### ToRGB
@@ -43,10 +43,10 @@ Formats tested as working are "png", "jpg" (or "jpeg"), "bmp", "tif" (or "tiff")
 img ← ToRGB ReadImg "image.png"
 ```
 
-Right arg: m×n (2D) matrix of 32-bit integers
+Right arg: m×n (2D) matrix of 32-bit integers  
 Returns: m×n×3 array representing RGB values
 
-If the image being read has an alpha channel, `ToRGB` will not return it.
+If the image being read has an alpha channel, `ToRGB` will not return it.  
 If you need the alpha channel, use `ToRGBA`.
 
 ### ToRGBA
@@ -55,7 +55,7 @@ If you need the alpha channel, use `ToRGBA`.
 img ← ToRGBA ReadImg "image.png"
 ```
 
-Right arg: m×n (2D) matrix of 32-bit integers
+Right arg: m×n (2D) matrix of 32-bit integers  
 Returns: m×n×4 array representing RGBA values
 
 # See also
