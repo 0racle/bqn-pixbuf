@@ -18,7 +18,7 @@ ToRGB ←  {⍉>  256|⌊∘÷⟜256⍟(⌽↕3)𝕩}
 ToRGBA ← {⍉>1⌽256|⌊∘÷⟜256⍟(⌽↕4)𝕩}
 
 ReadImg ← {
-  buf‿err ← ∾⟜⊑˝ gdkPixbuf.NewFromFile⟨(𝕩∾@),(⋈•foreign.null)⟩
+  buf‿err ← ∾⟜⊑˝ gdkPixbuf.NewFromFile⟨(•ToUTF8𝕩∾@),(⋈•foreign.null)⟩
   "Failed reading file " ! 0 = err.Sub •foreign.null.Cast "u8"
   w‿h ← (gdkPixbuf.GetWidth∾gdkPixbuf.GetHeight)⟨buf⟩
   p ← gdkPixbuf.GetPixels⟨img←gdkPixbuf.AddAlpha⟨buf,0,0,0,0⟩⟩
@@ -37,7 +37,7 @@ WriteImg ← {img𝕊fname:
   h‿w ← 2↑≢img ⋄ fmt ← ⊑>types⊑˜type
   data ← ⥊ (2=≠∘≢)◶((∾⟜255˘˘)⍟(4>⊢´∘≢))‿ToRGBA img
   buf ← gdkPixBuf.NewFromData⟨data,0,1,8,w,h,(4×w),•foreign.null,•foreign.null⟩
-  ok‿err ← ∾⟜⊑˝gdkPixBuf.Save⟨buf,(𝕩∾@),(fmt∾@),(⋈•foreign.null),0⟩
+  ok‿err ← ∾⟜⊑˝gdkPixBuf.Save⟨buf,(•ToUTF8𝕩∾@),(fmt∾@),(⋈•foreign.null),0⟩
   "Image save failed" ! 1=ok
   gdkPixbuf.Unref⟨buf⟩
   ok
