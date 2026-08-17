@@ -2,7 +2,7 @@
 
 This library provides functions for reading and writing images in several formats.
 
-This is done through FFI bindings to libgtk-pixbuf, and while some raw bindings are available, it is intended that most users can use the following functions
+This is done through FFI bindings to libgdk-pixbuf, and while some raw bindings are available, it is intended that most users can use the following functions
 
 The path to `libgdk_pixbuf` is hard-coded in `pixbuf.bqn` so you will most likely need to modify those values to get it working.
 
@@ -60,7 +60,7 @@ Returns: m×n×4 array representing RGBA values
 
 # See also
 
-This library plays nicely with [bqn-viewmat](https://github.com/0racle/bqn-viewmat) for viewing images
+This module plays nicely with [bqn-viewmat](https://github.com/0racle/bqn-viewmat) for viewing images
 
 ```bqn
 ⟨Viewmat⟩ ← •Import "viewmat.bqn"
@@ -69,4 +69,4 @@ This library plays nicely with [bqn-viewmat](https://github.com/0racle/bqn-viewm
 
 # Advanced
 
-If you want access to the underlying raw bindings, this library also exports the namespace `gtkPixbuf` which contains the few functions this library uses, as well as the `•FFI` bound lib so that you can write your own bindings.
+If you want access to the underlying raw bindings, this module also exports the namespace `gdkPixbuf` which contains the few functions this library uses, as well as the `•FFI` bound lib so that you can write your own bindings.
