@@ -17,9 +17,15 @@ gdkPixbuf ← {
 ToRGB ←  {⍉>  256|⌊∘÷⟜256⍟(⌽↕3)𝕩}
 ToRGBA ← {⍉>1⌽256|⌊∘÷⟜256⍟(⌽↕4)𝕩}
 
+GetErrorMsg ← {
+  domain‿code‿message ← (𝕩.Cast"{u32,i32,*u8}").Read 0
+  •FromUTF8 {@+𝕩.Read¨↕1⊸+•_while_(0≠𝕩.Read)0} message
+}
+
 ReadImg ← {
-  buf‿err ← ∾⟜⊑˝ gdkPixbuf.NewFromFile⟨(•ToUTF8𝕩∾@),(⋈•foreign.null)⟩
-  "Failed reading file " ! 0 = err.Sub •foreign.null.Cast "u8"
+  buf‿⟨err⟩ ← gdkPixbuf.NewFromFile⟨(•ToUTF8𝕩∾@),(⋈•foreign.null)⟩
+  failed ← err.Sub •foreign.null.Cast "u8"
+  (GetErrorMsg⍟(0≠failed) err) ! 0=failed
   w‿h ← (gdkPixbuf.GetWidth∾gdkPixbuf.GetHeight)⟨buf⟩
   p ← gdkPixbuf.GetPixels⟨img←gdkPixbuf.AddAlpha⟨buf,0,0,0,0⟩⟩
   z ← h‿w⥊8‿32•bit._cast 2‿1‿0‿3⊸⊏˘ ∘‿4⥊p.Readlist 4×w×h
@@ -33,12 +39,12 @@ types ← ⟨"png"‿@⟩‿⟨"bmp"‿@⟩‿⟨"jpg"‿"jpeg"⟩‿⟨"tif"‿
 
 WriteImg ← {img𝕊fname:
   ext ← ToLower{𝕩↑˜𝕩⊐'.'}⌾⌽fname
-  "Unknown type" ! ≠ type ← /∾´⟨ext⟩ ⊑∘∊⚇2 types
+  "Unknown or unsupported image format" ! ≠ type ← /∾´⟨ext⟩ ⊑∘∊⚇2 types
   h‿w ← 2↑≢img ⋄ fmt ← ⊑>types⊑˜type
   data ← ⥊ (2=≠∘≢)◶((∾⟜255˘˘)⍟(4>⊢´∘≢))‿ToRGBA img
   buf ← gdkPixBuf.NewFromData⟨data,0,1,8,w,h,(4×w),•foreign.null,•foreign.null⟩
-  ok‿err ← ∾⟜⊑˝gdkPixBuf.Save⟨buf,(•ToUTF8𝕩∾@),(fmt∾@),(⋈•foreign.null),0⟩
-  "Image save failed" ! 1=ok
+  ok‿⟨err⟩ ← gdkPixBuf.Save⟨buf,(•ToUTF8𝕩∾@),(fmt∾@),(⋈•foreign.null),0⟩
   gdkPixbuf.Unref⟨buf⟩
+  (GetErrorMsg⍟(1≠ok) err) ! 0≠ok
   ok
 }
