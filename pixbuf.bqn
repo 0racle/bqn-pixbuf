@@ -6,7 +6,7 @@ gdkPixbuf ← {
   newFrom_file ⇐ Lib   "*"‿"gdk_pixbuf_new_from_file"‿"*u8:c8"‿"&*u8"
   getWidth     ⇐ Lib "u32"‿"gdk_pixbuf_get_width"    ‿"*"
   getHeight    ⇐ Lib "u32"‿"gdk_pixbuf_get_height"   ‿"*"
-  getPixels    ⇐ Lib "*u8"‿"gdk_pixbuf_get_pixels"   ‿"*"
+  getPixels    ⇐ Lib "*i8"‿"gdk_pixbuf_get_pixels"   ‿"*"
   addAlpha     ⇐ Lib   "*"‿"gdk_pixbuf_add_alpha"    ‿"*"‿"i8"‿"i8"‿"i8"‿"i8"
   newFromData  ⇐ Lib   "*"‿"gdk_pixbuf_new_from_data"‿"*u8"‿"i32"‿"bool"‿"i32"‿"i32"‿"i32"‿"i32"‿"*"‿"*"
   save         ⇐ Lib  "u8"‿"gdk_pixbuf_save"         ‿"*"‿"*u8:c8"‿"*u8:c8"‿"&*u8"‿"u8"
@@ -22,7 +22,7 @@ ReadImg ← {
   "Failed reading file " ! 0 = err.Sub •foreign.null.Cast "u8"
   w‿h ← (gdkPixbuf.GetWidth∾gdkPixbuf.GetHeight)⟨buf⟩
   p ← gdkPixbuf.GetPixels⟨img←gdkPixbuf.AddAlpha⟨buf,0,0,0,0⟩⟩
-  z ← h‿w⥊{+´16777216‿65536‿256‿1×¯1⌽𝕩}˘∘‿4⥊p.Readlist 4×w×h
+  z ← h‿w⥊8‿32•bit._cast 2‿1‿0‿3⊸⊏˘ ∘‿4⥊p.Readlist 4×w×h
   gdkPixbuf.Unref⟨buf⟩ ⋄ gdkPixbuf.Unref⟨img⟩
   z
 }
