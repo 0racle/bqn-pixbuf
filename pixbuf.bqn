@@ -35,12 +35,15 @@ ReadImg ← {
 
 ToLower ← +⟜(32×1="A["⊸⍋)
 
-types ← ⟨"png"‿@⟩‿⟨"bmp"‿@⟩‿⟨"jpg"‿"jpeg"⟩‿⟨"tif"‿"tiff"⟩
+fmts ← [⟨⋈"png"⟩,⟨⋈"bmp"⟩,⟨"jpeg"‿"jpg"⟩,⟨"tiff"‿"tif"⟩]
+FormatFromExt ← {𝕊path:
+  fmt ← /⥊ fmts ∨´∘∊⚇2 ⋈ ext ← ToLower{𝕩↑˜𝕩⊐'.'}⌾⌽path
+  "Unknown or unsupported image format" ! ≠ fmt
+  ⊑> fmts ⊏˜ fmt
+}
 
-WriteImg ← {img𝕊fname:
-  ext ← ToLower{𝕩↑˜𝕩⊐'.'}⌾⌽fname
-  "Unknown or unsupported image format" ! ≠ type ← /∾´⟨ext⟩ ⊑∘∊⚇2 types
-  h‿w ← 2↑≢img ⋄ fmt ← ⊑>types⊑˜type
+WriteImg ← {img𝕊path:
+  fmt ← FormatFromExt path ⋄ h‿w ← 2↑≢img
   data ← ⥊ (2=≠∘≢)◶((∾⟜255˘˘)⍟(4>⊢´∘≢))‿ToRGBA img
   buf ← gdkPixBuf.NewFromData⟨data,0,1,8,w,h,(4×w),•foreign.null,•foreign.null⟩
   ok‿⟨err⟩ ← gdkPixBuf.Save⟨buf,(•ToUTF8𝕩∾@),(fmt∾@),(⋈•foreign.null),0⟩
