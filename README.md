@@ -16,7 +16,7 @@ This library uses newer syntax and feature of CBQN 0.12, so make sure you're up 
 img ← ReadImg "image.png"
 ```
 
-Right arg: string of the file path to be read
+Right arg: string of the file path to be read  
 Returns: m×n (2D) matrix of 32-bit integers, each encoding RGBA values
 
 ### WriteImg
